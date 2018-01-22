@@ -8,7 +8,13 @@ import * as actions from '../../actions/auth';
 const HomePage = ({ isAuthenticated, logout }) => (
   <div>
     <h1>Welcome to HomePage of Bookworm platform</h1>
-    { isAuthenticated ? <Button primary onClick={() => logout()}>Logout</Button> : <Link to='/login'>Login</Link> }
+    { isAuthenticated ?
+      <Button primary onClick={() => logout()}>Logout</Button>
+      :
+      <div>
+        <Link to='/login'>Login</Link> or <Link to='/signup'>Sign Up</Link>
+      </div>
+    }
   </div>
 );
 
