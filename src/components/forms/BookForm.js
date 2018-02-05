@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Grid, Image } from 'semantic-ui-react';
+import { Form, Button, Grid, Image, Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import InlineError from '../messages/InlineErrors';
@@ -85,8 +85,9 @@ class BookForm extends React.Component {
 		const { loading, errors, data } = this.state;
 
 		return (
-			<Form onSubmit={this.onSubmit} loading={loading}>
-				<Grid columns={2} fluid='true' stackable>
+			<Segment>
+				<Form onSubmit={this.onSubmit} loading={loading}>
+				<Grid columns={3} fluid='true' stackable>
 					<Grid.Row>
 						<Grid.Column>
 							<Form.Field error={!!errors.title}>
@@ -115,11 +116,12 @@ class BookForm extends React.Component {
 							</Form.Field>
 							<Form.Field error={!!errors.pages}>
 								<label htmlFor='pages'>Pages</label>
-								<input 
-									type='number'
+								<input
+									disabled={data.pages === undefined}
+									type='text'
 									name='pages'
 									id='pages'
-									value={data.pages}
+									value={data.pages !== undefined ? data.pages : 'Loading...'}
 									onChange={this.onChangeNumber}
 								/>
 								{ errors.pages && <InlineError text={errors.pages} /> }
@@ -131,10 +133,13 @@ class BookForm extends React.Component {
 						</Grid.Column>
 					</Grid.Row>
 					<Grid.Row>
-						<Button primary>Save</Button>
+						<Grid.Column>
+							<Button primary>Save</Button>
+						</Grid.Column>
 					</Grid.Row>
 				</Grid>
 			</Form>
+		</Segment>
 		);
 	}
 }
@@ -146,7 +151,7 @@ BookForm.propTypes = {
 		title: PropTypes.string.isRequired,
 		authors: PropTypes.string.isRequired,
 		covers: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-		pages: PropTypes.number.isRequired
+		pages: PropTypes.number
 	}).isRequired,
 };
 
