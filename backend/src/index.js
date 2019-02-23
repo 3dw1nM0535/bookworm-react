@@ -12,7 +12,8 @@ import books from './routes/books';
 dotenv.config();
 
 const app = express();
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.set('useCreateIndex', true);
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 
 // parse application/json data
 app.use(bodyParser.json());
@@ -26,4 +27,4 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(8080, () => console.log('Server running on port 8080'));
+app.listen(process.env.PORT, () => console.log('Server running on port 8080'));
