@@ -1,9 +1,7 @@
 import React from 'react';
-import { Form, Button, Message } from 'semantic-ui-react';
+import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import isEmail from 'validator/lib/isEmail';
-
-import InlineError from '../messages/InlineErrors';
 
 class ForgotPasswordForm extends React.Component {
   constructor (props) {
@@ -12,7 +10,6 @@ class ForgotPasswordForm extends React.Component {
       data: {
         email: ''
       },
-      loading: false,
       errors: {}
     }
 
@@ -44,29 +41,38 @@ class ForgotPasswordForm extends React.Component {
 
   render () {
 
-    const { loading, errors, data } = this.state;
+    const { errors, data } = this.state;
 
     return (
-      <Form onSubmit={this.onSubmit} loading={loading}>
-        { errors.global && (
-          <Message negative>
-            <Message.Header>Something went wrong</Message.Header>
-            <p>{errors.global}</p>
-          </Message>
+      <form onSubmit={this.onSubmit}>
+        {!!errors.global && (
+          <div className="alert alert-danger">{errors.global}</div>
         )}
-        <Form.Field error={!!errors.email}>
-          <label htmlFor='email'>Email</label>
+
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
           <input
-            type='email'
-            name='email'
-            onChange={this.onChange}
+            type="email"
+            id="email"
+            name="email"
             value={data.email}
-            placeholder="example@email.com"
+            onChange={this.onChange}
+            className={
+              errors.email ? "form-control is-invalid" : "form-control"
+            }
           />
-        { errors.email && <InlineError text={errors.email} /> }
-        </Form.Field>
-        <Button primary>Reset Password</Button>
-      </Form>
+          <div className="invalid-feedback">{errors.email}</div>
+        </div>
+
+        <button type="submit" className="btn btn-primary btn-block">
+          Send Recover Password Link
+        </button>
+
+        <small className="form-text text-center">
+          <Link to="/signup">Sign Up</Link> |
+          <Link to="/login">Login</Link>
+        </small>
+      </form>
     );
   }
 }

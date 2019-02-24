@@ -16,13 +16,13 @@ import UserRoute from './components/routes/UserRoute';
 import GuestRoute from './components/routes/GuestRoute';
 
 const App = ({ location, isAuthenticated }) => (
-  <div className='ui container'>
+  <div>
     {isAuthenticated && <TopNavigation /> }
     <Route location={location} path='/' exact component={HomePage} />
     <Route location={location} path='/confirmation/:token' exact component={ConfirmationPage} />
     <GuestRoute location={location} path='/signup' exact component={SignupPage} />
     <GuestRoute location={location} path='/login' exact component={LoginPage} />
-    <GuestRoute location={location} path='/reset_password' component={ForgotPasswordPage} />
+    <GuestRoute location={location} path='/forgot_password' component={ForgotPasswordPage} />
     <GuestRoute location={location} path='/reset-password/:token' component={ResetPasswordPage} />
     <UserRoute location={location} path='/dashboard' exact component={DashboardPage} />
     <UserRoute location={location} path='/books/new' exact component={AddNewBookPage} />

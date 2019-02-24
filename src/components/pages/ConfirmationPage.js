@@ -1,5 +1,4 @@
 import React from 'react';
-import { Message, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -23,36 +22,25 @@ class ConfirmationPage extends React.Component {
     const { loading, success } = this.state;
 
     return (
-      <div>
-        { loading && (
-            <Message icon>
-              <Icon name="circle notched" loading />
-              <Message.Header>Validating your email</Message.Header>
-            </Message>
+      <div className="container-fluid">
+        {loading && (
+          <div className="alert alert-info">Validating your account...</div>
         )}
 
-        { !loading && success && (
-          <Message success icon>
-            <Icon name='checkmark' />
-            <Message.Content>
-              <Message.Header>
-                Thank you. Your account has been verified.
-              </Message.Header>
-              <Link to='/dashboard'>Go to your dashboard</Link>
-            </Message.Content>
-          </Message>
-        )}
+        {!loading &&
+          success && (
+            <div className="alert alert-success">
+              Thank you! Your account has been verified. Now you can go to your
+              <Link to="/dashboard"> dashboard</Link>
+            </div>
+          )}
 
-        { !loading && !success && (
-          <Message negative icon>
-            <Icon name='warning sign' />
-            <Message.Content>
-              <Message.Header>
-                Oops! Invalid token it seems.
-              </Message.Header>
-            </Message.Content>
-          </Message>
-        )}
+        {!loading &&
+          !success && (
+            <div className="alert alert-danger">
+              Ooops. Invalid token it seems.
+            </div>
+          )}
       </div>
     );
   }

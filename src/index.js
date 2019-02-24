@@ -1,19 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import decode from 'jwt-decode';
 
-import 'semantic-ui-css/semantic.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 import App from './App';
 import rootReducer from './reducers/rootReducer';
 import registerServiceWorker from './registerServiceWorker';
 import { userLoggedIn } from './actions/auth';
 import setAuthorizationHeader from './utils/setAuthorizationHeader';
+import history from "./history";
 
 const store = createStore(
   rootReducer,
@@ -28,10 +29,10 @@ if (localStorage.bookwormJWT) {
 }
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router history={history}>
     <Provider store={store}>
       <Route component={App} />
     </Provider>
-  </BrowserRouter>,
+  </Router>,
   document.getElementById('root'));
 registerServiceWorker();

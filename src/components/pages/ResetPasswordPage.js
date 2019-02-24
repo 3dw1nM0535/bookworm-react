@@ -1,5 +1,5 @@
 import React from 'react';
-import { Message } from 'semantic-ui-react';
+import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -31,9 +31,30 @@ class ResetPasswordPage extends React.Component {
 
     return (
       <div>
-        { loading && <Message>Loading</Message> }
-        { !loading && success && <ResetPasswordForm submit={this.submit} token={token} /> }
-        { !loading && !success && <Message>Invalid Token</Message> }
+        <div className="container" style={{ height: "100vh" }}>
+          <div className="row align-items-center" style={{ height: "100vh" }}>
+            <div className="col col-xs-12 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+              <div className="card">
+                <h2 className="card-header">Set New Password</h2>
+                <div className="card-body">
+                  {loading && <div className="alert alert-info">Loading</div>}
+                  {!loading &&
+                    success && (
+                      <ResetPasswordForm submit={this.submit} token={token} />
+                    )}
+                  {!loading &&
+                    !success && (
+                      <div className="alert alert-danger">
+                        Invalid Token. Try to{" "}
+                        <Link to="/forgot_password">recover password</Link>{" "}
+                        again.
+                      </div>
+                    )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

@@ -1,8 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button } from 'semantic-ui-react';
-
-import InlineError from '../messages/InlineErrors';
 
 class ResetPasswordForm extends React.Component {
   constructor(props) {
@@ -13,7 +10,6 @@ class ResetPasswordForm extends React.Component {
         password: '',
         passwordConfirmation: ''
       },
-      loading: false,
       errors: {}
     };
 
@@ -46,37 +42,47 @@ class ResetPasswordForm extends React.Component {
 
   render () {
 
-    const { loading, data, errors } = this.state;
+    const { data, errors } = this.state;
 
     return (
       <div>
-        <Form onSubmit={this.onSubmit} loading={loading}>
-          <Form.Field error={!!errors.password}>
-            <label htmlFor='password'>New password</label>
-            <input
-              type='password'
-              name='password'
-              id='password'
-              placeholder='New password'
-              onChange={this.onChange}
-              value={data.password}
-            />
-          { errors.password && <InlineError text={errors.password} /> }
-          </Form.Field>
-          <Form.Field error={!!errors.passwordConfirmation}>
-            <label htmlFor='passwordConfirmation'>Confirm New password</label>
-            <input
-              type='password'
-              id='passwordConfirmation'
-              name='passwordConfirmation'
-              placeholder='Confirm New password'
-              value={data.passwordConfirmation}
-              onChange={this.onChange}
-            />
-          { errors.passwordConfirmation && <InlineError text={errors.passwordConfirmation} /> }
-          </Form.Field>
-          <Button primary>Submit new password</Button>
-        </Form>
+        <form onSubmit={this.onSubmit}>
+        <div className="form-group">
+          <label htmlFor="password">New Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={data.password}
+            onChange={this.onChange}
+            className={
+              errors.password ? "form-control is-invalid" : "form-control"
+            }
+          />
+          <div className="invalid-feedback">{errors.password}</div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="passwordConfirmation">Confirm Password</label>
+          <input
+            type="password"
+            id="passwordConfirmation"
+            name="passwordConfirmation"
+            value={data.passwordConfirmation}
+            onChange={this.onChange}
+            className={
+              errors.passwordConfirmation
+                ? "form-control is-invalid"
+                : "form-control"
+            }
+          />
+          <div className="invalid-feedback">{errors.passwordConfirmation}</div>
+        </div>
+
+        <button type="submit" className="btn btn-primary btn-block">
+          Reset Password
+        </button>
+      </form>
       </div>
     );
   }

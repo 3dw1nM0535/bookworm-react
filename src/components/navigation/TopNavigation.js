@@ -1,41 +1,116 @@
-import React from 'react';
-import { Menu, Dropdown, Image } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import gravatarUrl from 'gravatar-url';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from "react";
+import PropTypes from "prop-types";
+import {
+  Navbar,
+  Nav,
+  NavbarBrand,
+  NavbarToggler,
+  Collapse,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
+import { connect } from "react-redux";
+import { NavLink as RouterNavLink } from "react-router-dom";
+import gravatarUrl from "gravatar-url";
+import { FormattedMessage } from "react-intl";
+import * as actions from "../../actions/auth";
+// import { setLocale } from "../../actions/locale";
 
-import * as actions from '../../actions/auth';
-import { allBooksSelector } from '../../reducers/books';
+class TopNavigation extends React.Component {
+  state = {
+    isOpen: false
+  };
 
-const TopNavigation = ({ user, logout, hasBooks }) => (
-  <Menu secondary pointing>
-    <Menu.Item as={Link} to='/dashboard'>Dashboard</Menu.Item>
-    { hasBooks && <Menu.Item as={Link} to='/books/new'>Add New Book</Menu.Item> }
+  toggle = () => this.setState({ isOpen: !this.state.isOpen });
 
-    <Menu.Menu position='right'>
-      <Dropdown trigger={<Image avatar src={gravatarUrl(user.email)} />}>
-        <Dropdown.Menu>
-          <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </Menu.Menu>
-  </Menu>
-);
+  render() {
+    const { user, logout } = this.props;
+
+    return (
+      <Navbar light expand="sm" color="faded">
+        <NavbarBrand tag={RouterNavLink} activeClassName="active" to="/">
+          ALHub
+        </NavbarBrand>
+        <NavbarToggler onClick={this.toggle} />
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <Nav navbar>
+            <NavItem>
+              <NavLink
+                tag={RouterNavLink}
+                activeClassName="active"
+                to="/dashboard"
+              >
+                <FormattedMessage
+                  id="nav.dashboard"
+                  defaultMessage="Dashboard"
+                />
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                tag={RouterNavLink}
+                activeClassName="active"
+                to="/characters"
+              >
+                <FormattedMessage
+                  id="nav.characters"
+                  defaultMessage="My Characters"
+                />
+              </NavLink>
+            </NavItem>
+          </Nav>
+          <Nav className="ml-auto" navbar>
+            {/* <a role="button" onClick={() => this.props.setLocale("en")}>
+              EN
+            </a>{" "}
+            |
+            <a role="button" onClick={() => this.props.setLocale("ru")}>
+              RU
+            </a> */}
+            <UncontrolledDropdown nav>
+              <DropdownToggle nav>
+                <img
+                  className="img-fluid rounded-circle"
+                  src={gravatarUrl(user.email, { size: 40 })}
+                  alt="Gravatar"
+                />
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>My Account</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem onClick={() => logout()}>Logout</DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
+        </Collapse>
+      </Navbar>
+    );
+  }
+}
 
 TopNavigation.propTypes = {
   user: PropTypes.shape({
     email: PropTypes.string.isRequired
   }).isRequired,
-  hasBooks: PropTypes.bool.isRequired,
-  logout: PropTypes.func.isRequired
-}
+  logout: PropTypes.func.isRequired,
+  // setLocale: PropTypes.func.isRequired
+};
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    user: state.user,
-    hasBooks: allBooksSelector(state).length > 0
-  }
+    user: state.user
+  };
 }
 
-export default connect(mapStateToProps, { logout: actions.logout })(TopNavigation);
+export default connect(
+  mapStateToProps,
+  { logout: actions.logout, /* setLocale */ },
+  null,
+  {
+    pure: false
+  }
+)(TopNavigation);
