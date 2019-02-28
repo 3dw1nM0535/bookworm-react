@@ -11,6 +11,8 @@ import DashboardPage from './components/pages/DashboardPage';
 import ConfirmationPage from './components/pages/ConfirmationPage';
 import ForgotPasswordPage from './components/pages/ForgotPasswordPage';
 import ResetPasswordPage from './components/pages/ResetPasswordPage';
+import CharactersPage from "./components/pages/CharactersPage";
+import NewCharacterPage from "./components/pages/NewCharacterPage";
 import TopNavigation from './components/navigation/TopNavigation';
 import UserRoute from './components/routes/UserRoute';
 import GuestRoute from './components/routes/GuestRoute';
@@ -36,6 +38,8 @@ class App extends React.Component {
           <GuestRoute location={location} path='/forgot_password' component={ForgotPasswordPage} />
           <GuestRoute location={location} path='/reset-password/:token' component={ResetPasswordPage} />
           <UserRoute location={location} path='/dashboard' exact component={DashboardPage} />
+          <UserRoute location={location} path="/characters" exact component={CharactersPage} />
+          <UserRoute location={location} path="/characters/new" exact component={NewCharacterPage} />
         </div>
       </Loader>
     );

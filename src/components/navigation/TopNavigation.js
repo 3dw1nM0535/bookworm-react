@@ -16,7 +16,6 @@ import {
 import { connect } from "react-redux";
 import { NavLink as RouterNavLink } from "react-router-dom";
 import gravatarUrl from "gravatar-url";
-import { FormattedMessage } from "react-intl";
 import * as actions from "../../actions/auth";
 // import { setLocale } from "../../actions/locale";
 
@@ -44,10 +43,7 @@ class TopNavigation extends React.Component {
                 activeClassName="active"
                 to="/dashboard"
               >
-                <FormattedMessage
-                  id="nav.dashboard"
-                  defaultMessage="Dashboard"
-                />
+                Dashboard
               </NavLink>
             </NavItem>
             <NavItem>
@@ -56,10 +52,7 @@ class TopNavigation extends React.Component {
                 activeClassName="active"
                 to="/characters"
               >
-                <FormattedMessage
-                  id="nav.characters"
-                  defaultMessage="My Characters"
-                />
+                My characters
               </NavLink>
             </NavItem>
           </Nav>
