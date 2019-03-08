@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import Loader from "react-loader";
 
 import HomePage from './components/pages/HomePage';
@@ -17,12 +17,12 @@ import TopNavigation from './components/navigation/TopNavigation';
 import UserRoute from './components/routes/UserRoute';
 import GuestRoute from './components/routes/GuestRoute';
 
-import { fetchCurrentUser } from "./actions/users";
+import { fetchCurrentUserRequest } from "./actions/users";
 
 class App extends React.Component {
 
   componentDidMount() {
-    if (this.props.isAuthenticated) this.props.fetchCurrentUser();
+    if (this.props.isAuthenticated) this.props.fetchCurrentUserRequest();
   }
 
   render() {
@@ -51,7 +51,7 @@ App.propTypes = {
     pathname: PropTypes.string.isRequired
   }).isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  fetchCurrentUser: PropTypes.func.isRequired,
+  fetchCurrentUserRequest: PropTypes.func.isRequired,
   loaded: PropTypes.bool.isRequired,
 };
 
@@ -61,4 +61,4 @@ function mapStateToProps (state) {
     loaded: state.user.loaded,
   };
 }
-export default connect(mapStateToProps, { fetchCurrentUser })(App);
+export default connect(mapStateToProps, { fetchCurrentUserRequest })(App);

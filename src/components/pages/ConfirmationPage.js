@@ -11,6 +11,7 @@ class ConfirmationPage extends React.Component {
     success: false
   };
 
+  // On component mount(lifecycle method)
   componentDidMount() {
     this.props.confirm(this.props.match.params.token)
       .then(() => this.setState({ loading: false, success: true }))

@@ -1,10 +1,10 @@
 import React from "react";
-import { slideInLeft } from "react-animations";
+import { fadeIn } from "react-animations";
 import * as glamor from "glamor";
 import glamorous from "glamorous";
 
 const FadeInDiv = glamorous.div({
-  animation: `1s ${glamor.css.keyframes(slideInLeft)}`
+  animation: `1s ${glamor.css.keyframes(fadeIn)}`
 });
 
 class NewCharacterPage extends React.Component {

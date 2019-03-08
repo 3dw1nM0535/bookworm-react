@@ -1,12 +1,14 @@
-import React from 'react';
-import { Card, Icon } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Card, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const AddBook = () => (
   <Card centered>
-    <Card.Content textAlign='center'>
+    <Card.Content textAlign="center">
       <Card.Header>Add new Book</Card.Header>
-      <Link to='/books/new'><Icon name='plus circle' size='massive' /></Link>
+      <Link to="/books/new">
+        <Icon name="plus circle" size="massive" />
+      </Link>
     </Card.Content>
   </Card>
 );
